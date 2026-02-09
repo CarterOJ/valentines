@@ -118,10 +118,10 @@ export default function Home() {
           Hey, pal
         </p>
         <h1 className="fade-up delay-1 stage-hidden mt-6 max-w-3xl font-title text-5xl font-semibold leading-[1.05] text-rose-950 sm:text-6xl">
-          Would you be my Valentine?
+          Will you be my Valentine?
         </h1>
         <p className="fade-up delay-2 stage-hidden mt-6 max-w-2xl text-base leading-7 text-rose-900/70 sm:text-lg">
-          I've got plans for us this Valentine's Day, and this website is gonna play a big role. Keep checking back. Who know's what might appear here.
+          Cause I guess I still gotta ask you apparently? I've got plans for us this Valentine's Day weekend, and this website is gonna play a part. Keep checking back. Who know's what might appear here.
         </p>
 
         <div className="fade-up delay-3 mt-10 flex w-full max-w-md flex-col items-center justify-center gap-4 sm:flex-row">

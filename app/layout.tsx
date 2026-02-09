@@ -14,7 +14,7 @@ const workSans = Work_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Be My Valentine",
+  title: "Chesney's Valentine's",
   description: "A small love note for a very special person.",
 };
 
