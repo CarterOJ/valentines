@@ -1,3 +1,4 @@
+import { MessageProvider  } from "./messageContext";
 import type { Metadata } from "next";
 import { Playfair_Display, Work_Sans } from "next/font/google";
 import "./globals.css";
@@ -25,7 +26,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${workSans.variable} antialiased`}>
-        {children}
+        <MessageProvider>
+          {children}
+        </MessageProvider>
       </body>
     </html>
   );

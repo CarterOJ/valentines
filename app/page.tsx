@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="valentine-bg">
@@ -19,9 +21,9 @@ export default function Home() {
           <button className="primary-cta" type="button">
             Yes
           </button>
-          <button className="secondary-cta" type="button">
+          <Link className="secondary-cta" href="/no">
             No
-          </button>
+          </Link>
         </div>
 
         <p className="fade-up delay-4 mt-10 text-sm text-rose-900/60">

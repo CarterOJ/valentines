@@ -64,6 +64,9 @@ body {
 
 .primary-cta,
 .secondary-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 52px;
   min-width: 130px;
   border-radius: 999px;
