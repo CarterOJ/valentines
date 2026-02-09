@@ -437,11 +437,68 @@ body {
 }
 
 @media (max-width: 640px) {
+  .construction-shell {
+    padding: 3.5rem 1rem;
+  }
+
   .construction-card {
-    padding: 2.5rem 1.5rem;
+    padding: 2.25rem 1.25rem;
+    border-radius: 22px;
+  }
+
+  .construction-title {
+    margin-top: 1.2rem;
+    font-size: clamp(1.8rem, 8vw, 2.6rem);
+  }
+
+  .construction-copy {
+    font-size: 0.98rem;
   }
 
   .tape {
-    height: 56px;
+    height: 48px;
+    left: -18vw;
+    right: -18vw;
+  }
+
+  .tape-top {
+    top: 6%;
+  }
+
+  .tape-bottom {
+    bottom: 6%;
+  }
+
+  .timer {
+    margin-top: 2rem;
+    padding: 1.25rem 1rem;
+    border-radius: 18px;
+  }
+
+  .timer-header {
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+  }
+
+  .timer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .timer-value {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .construction-card {
+    padding: 2rem 1rem;
+  }
+
+  .timer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-segment {
+    padding: 1rem 0.85rem;
   }
 }

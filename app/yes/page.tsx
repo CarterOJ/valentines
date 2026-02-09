@@ -77,9 +77,6 @@ export default function YesPage() {
             </div>
           </div>
         </div>
-
-        <div className="construction-sign" aria-hidden="true">
-        </div>
       </main>
     </div>
   );
