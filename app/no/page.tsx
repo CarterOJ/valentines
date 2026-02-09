@@ -3,15 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMessage } from "../messageContext";
-
-const messages = [
-  "Okay, buddy. Let's try that again.",
-  "Just say you hate me...",
-  "...",
-  "You gotta work on your stubborness.",
-  "😡",
-  "Alright, try and press it now.",
-];
+import { messages } from "../messages";
 
 export default function NoPage() {
   const router = useRouter();
