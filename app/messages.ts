@@ -5,5 +5,6 @@ export const messages = [
   "Here let me make it easier for you...",
   "Little blind now, are we? I can work with that.",
   "Alright, try and press it now.",
+  "Maybe Bao and Mushu can help me out here.",
   "I think you've forgotten who's in charge here."
 ];

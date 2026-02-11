@@ -5,14 +5,37 @@ import { useEffect, useRef, useState } from "react";
 import { useMessage } from "./messageContext";
 import { messages } from "./messages";
 
+interface DogPosition {
+  x: number;
+  y: number;
+  targetX: number;
+  targetY: number;
+  scaleX: number;
+}
+
 export default function Home() {
   const { index } = useMessage();
   const isGiantYes = index % messages.length === 3;
   const isDarkStage = index % messages.length === 4;
+  const isDogStage = index % messages.length === 6;
   const [isLightOn, setIsLightOn] = useState(false);
   const isLastMessage = index % messages.length === messages.length - 1;
-  const isEvasive = index % messages.length === messages.length - 2;
+  const isEvasive = index % messages.length === messages.length - 3;
   const [noOffset, setNoOffset] = useState({ x: 0, y: 0 });
+  const [baoPos, setBaoPos] = useState<DogPosition>({
+    x: 0,
+    y: 0,
+    targetX: 0,
+    targetY: 0,
+    scaleX: 1,
+  });
+  const [mushuPos, setMushuPos] = useState<DogPosition>({
+    x: 0,
+    y: 0,
+    targetX: 0,
+    targetY: 0,
+    scaleX: 1,
+  });
   const noWrapperRef = useRef<HTMLSpanElement | null>(null);
   const noRectRef = useRef<DOMRect | null>(null);
   const noBoundsRef = useRef<{
@@ -21,12 +44,72 @@ export default function Home() {
     minY: number;
     maxY: number;
   } | null>(null);
+  const baoRef = useRef<DogPosition>({ x: 0, y: 0, targetX: 0, targetY: 0, scaleX: 1 });
+  const mushuRef = useRef<DogPosition>({ x: 0, y: 0, targetX: 0, targetY: 0, scaleX: 1 });
+
+  const generateRandomPoint = () => {
+    return {
+      x: Math.random() * (window.innerWidth - 229),
+      y: Math.random() * (window.innerHeight - 200),
+    };
+  };
+
+  const createDogAnimation = (
+    dogRef: React.MutableRefObject<DogPosition>,
+    setDogPos: React.Dispatch<React.SetStateAction<DogPosition>>
+  ) => {
+    const animate = () => {
+      const dog = dogRef.current;
+      const speed = 2.5;
+      const distance = Math.sqrt(
+        Math.pow(dog.targetX - dog.x, 2) + Math.pow(dog.targetY - dog.y, 2)
+      );
+
+      if (distance < 10) {
+        // Reached target, pick new one
+        const newTarget = generateRandomPoint();
+        dog.targetX = newTarget.x;
+        dog.targetY = newTarget.y;
+      }
+
+      const angle = Math.atan2(dog.targetY - dog.y, dog.targetX - dog.x);
+      dog.x += Math.cos(angle) * speed;
+      dog.y += Math.sin(angle) * speed;
+
+      // Determine direction and flip sprite based on movement direction
+      dog.scaleX = dog.targetX > dog.x ? 1 : -1;
+
+      setDogPos({ ...dog });
+      requestAnimationFrame(animate);
+    };
+
+    // Initialize target
+    const initialTarget = generateRandomPoint();
+    const dog = dogRef.current;
+    dog.targetX = initialTarget.x;
+    dog.targetY = initialTarget.y;
+    setDogPos({ ...dog });
+
+    requestAnimationFrame(animate);
+  };
 
   useEffect(() => {
     if (!isDarkStage) {
       setIsLightOn(false);
     }
   }, [isDarkStage]);
+
+  useEffect(() => {
+    if (isDogStage) {
+      createDogAnimation(baoRef, setBaoPos);
+    }
+  }, [isDogStage]);
+
+  useEffect(() => {
+    if (isDogStage) {
+      createDogAnimation(mushuRef, setMushuPos);
+    }
+  }, [isDogStage]);
 
   useEffect(() => {
     if (!isEvasive) {
@@ -91,8 +174,26 @@ export default function Home() {
 
   return (
     <div className={`valentine-bg${isDarkStage && !isLightOn ? " dark-stage" : ""}`}>
+      {isDogStage && (
+        <>
+          <div
+            className="dog-runner"
+            aria-hidden="true"
+            style={{
+              transform: `translate(${baoPos.x}px, ${baoPos.y}px) scaleX(${baoPos.scaleX})`,
+            }}
+          />
+          <div
+            className="dog-runner-mushu"
+            aria-hidden="true"
+            style={{
+              transform: `translate(${mushuPos.x}px, ${mushuPos.y}px) scaleX(${mushuPos.scaleX})`,
+            }}
+          />
+        </>
+      )}
       <main
-        className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center"
+        className="relative z-10 mx-auto flex min-h-screen w-full max-w-5xl flex-col items-center justify-center px-6 py-16 text-center"
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setNoOffset({ x: 0, y: 0 })}
       >
