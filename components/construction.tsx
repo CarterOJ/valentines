@@ -1,4 +1,4 @@
-export default function Construction({remainingMs}: {remainingMs: number}) {
+export default function Construction({remainingMs, message, day}: {remainingMs: number, message: string, day: string}) {
   const pad = (value: number) => value.toString().padStart(2, "0");
   const totalSeconds = Math.floor(remainingMs / 1000);
   const days = Math.floor(totalSeconds / 86400);
@@ -16,11 +16,11 @@ export default function Construction({remainingMs}: {remainingMs: number}) {
         <div className="construction-card">
           <h1 className="construction-title">CAUTION</h1>
           <p className="construction-copy">
-            This page is currently under construction. Come back on Friday to unlock the start of Valentine's Day Weekend!
+            This page is currently under construction. {message}
           </p>
 
           <div className="timer">
-            <div className="timer-header">Countdown to Friday midnight</div>
+            <div className="timer-header">Countdown to {day} midnight</div>
             <div className="timer-grid">
               <div className="timer-segment">
                 <span className="timer-value">{pad(days)}</span>

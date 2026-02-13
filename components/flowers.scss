@@ -1,16 +1,14 @@
-*,
-*::after,
-*::before {
+.friday-flowers,
+.friday-flowers *,
+.friday-flowers *::after,
+.friday-flowers *::before {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-:root {
+.friday-flowers {
   --dark-color: #000;
-}
-
-.body {
   display: flex;
   align-items: flex-end;
   justify-content: center;

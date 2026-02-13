@@ -4,45 +4,20 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import "@/components/flowers.scss";
 import Construction from "@/components/construction";
-import { useSwitchPage } from "@/components/switchPageContext";
+import { SwitchPageProvider, useSwitchPage } from "@/components/switchPageContext";
 
-const getNextFridayMidnight = (now: Date) => {
-  const target = new Date(now);
-  const friday = 5;
-  const day = now.getDay();
-  const daysUntilFriday = (friday - day + 7) % 7;
+export default function FridayWrapper() {
+  return (
+    <SwitchPageProvider targetDate={new Date("2026-02-13T00:00:00")}>
+      <Friday />
+    </SwitchPageProvider>
+  );
+}
 
-  target.setDate(now.getDate() + daysUntilFriday);
-  target.setHours(0, 0, 0, 0);
+export function Friday() {
+  const { switchPage, remainingMs } = useSwitchPage();
 
-  if (target.getTime() <= now.getTime()) {
-    target.setDate(target.getDate() + 7);
-  }
-
-  return target;
-};
-
-export default function Friday() {
-  const [remainingMs, setRemainingMs] = useState(0);
-  const { switchPage, setSwitchPage } = useSwitchPage();
-
-  useEffect(() => {
-    // const nextTarget = getNextFridayMidnight(new Date());
-    const nextTarget = new Date("2026-02-12T20:44:00");
-    setRemainingMs(Math.max(0, nextTarget.getTime() - Date.now()));
-
-    const timer = window.setInterval(() => {
-      if (nextTarget.getTime() <= Date.now()) {
-        setSwitchPage(true);
-      }
-
-      setRemainingMs(Math.max(0, nextTarget.getTime() - Date.now()));
-    }, 250);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
-  return switchPage ? <Flowers /> : <Construction remainingMs={remainingMs} />;
+  return switchPage ? <Flowers /> : <Construction remainingMs={remainingMs} message={"Come back on Friday to unlock the start of Valentine's Day weekend and receive your first hint!"} day={"Friday"} />;
 }
 
 /*
@@ -63,7 +38,7 @@ function Flowers() {
     }, []);
 
     return (
-        <div className={`body ${loaded ? "" : "not-loaded"}`}>
+        <div className={`friday-flowers ${loaded ? "" : "not-loaded"}`}>
             <Link href="/saturday" className="magic-link">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
