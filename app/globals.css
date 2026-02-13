@@ -258,6 +258,35 @@ body {
     transform: translateY(0);
   }
 }
+
+.fade-up-down {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUpDown 3s ease forwards;
+}
+
+@keyframes fadeUpDown {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
 /* ===== Base shared styles ===== */
 .dog-runner,
 .dog-runner-mushu {
