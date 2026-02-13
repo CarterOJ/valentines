@@ -1,4 +1,5 @@
-import { MessageProvider  } from "./messageContext";
+import { MessageProvider  } from "@/components/messageContext";
+import { SwitchPageProvider } from "@/components/switchPageContext";
 import type { Metadata } from "next";
 import { Playfair_Display, Work_Sans } from "next/font/google";
 import "./globals.css";
@@ -26,9 +27,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${playfair.variable} ${workSans.variable} antialiased`}>
-        <MessageProvider>
-          {children}
-        </MessageProvider>
+        <SwitchPageProvider>
+          <MessageProvider>
+            {children}
+          </MessageProvider>
+        </SwitchPageProvider>
       </body>
     </html>
   );

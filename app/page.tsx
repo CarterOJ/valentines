@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useMessage } from "./messageContext";
-import { messages } from "./messages";
+import { useMessage } from "@/components/messageContext";
+import { messages } from "@/utils/messages";
 
 interface DogPosition {
   x: number;
@@ -228,7 +228,7 @@ export default function Home() {
         <div className="fade-up delay-3 mt-10 flex w-full max-w-md flex-col items-center justify-center gap-4 sm:flex-row">
           <Link
             className={`primary-cta${isGiantYes ? " primary-cta-giant" : ""}${isDarkStage && !isLightOn ? " primary-cta-spotlight" : ""}`}
-            href="/yes"
+            href="/friday"
           >
             Yes
           </Link>
@@ -239,7 +239,7 @@ export default function Home() {
           >
             <Link
               className={isLastMessage ? "primary-cta" : "secondary-cta"}
-              href={isLastMessage ? "/yes" : "/no"}
+              href={isLastMessage ? "/friday" : "/no"}
             >
               {isLastMessage ? "Yes" : "No"}
             </Link>

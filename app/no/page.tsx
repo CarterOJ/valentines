@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMessage } from "../messageContext";
-import { messages } from "../messages";
+import { useMessage } from "@/components/messageContext";
+import { messages } from "@/utils/messages";
 
 export default function NoPage() {
   const router = useRouter();

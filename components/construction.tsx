@@ -1,41 +1,5 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
-const pad = (value: number) => value.toString().padStart(2, "0");
-
-const getNextFridayMidnight = (now: Date) => {
-  const target = new Date(now);
-  const friday = 5;
-  const day = now.getDay();
-  const daysUntilFriday = (friday - day + 7) % 7;
-
-  target.setDate(now.getDate() + daysUntilFriday);
-  target.setHours(0, 0, 0, 0);
-
-  if (target.getTime() <= now.getTime()) {
-    target.setDate(target.getDate() + 7);
-  }
-
-  return target;
-};
-
-export default function YesPage() {
-  const [target, setTarget] = useState<Date | null>(null);
-  const [remainingMs, setRemainingMs] = useState(0);
-
-  useEffect(() => {
-    const nextTarget = getNextFridayMidnight(new Date());
-    setTarget(nextTarget);
-    setRemainingMs(Math.max(0, nextTarget.getTime() - Date.now()));
-
-    const timer = window.setInterval(() => {
-      setRemainingMs(Math.max(0, nextTarget.getTime() - Date.now()));
-    }, 1000);
-
-    return () => window.clearInterval(timer);
-  }, []);
-
+export default function Construction({remainingMs}: {remainingMs: number}) {
+  const pad = (value: number) => value.toString().padStart(2, "0");
   const totalSeconds = Math.floor(remainingMs / 1000);
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);
