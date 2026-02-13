@@ -17,7 +17,7 @@ export default function FridayWrapper() {
 export function Friday() {
   const { switchPage, remainingMs } = useSwitchPage();
 
-  return switchPage ? <Flowers /> : <Construction remainingMs={remainingMs} message={"Come back on Friday to unlock the start of Valentine's Day weekend and receive your first hint!"} day={"Friday"} />;
+  return switchPage ? <Flowers /> : <Construction remainingMs={remainingMs} message={"Come back on Friday to unlock the start of Valentine's Day weekend!"} day={"Friday"} />;
 }
 
 /*
@@ -28,18 +28,36 @@ export function Friday() {
 */
 function Flowers() {
     const [loaded, setLoaded] = useState(false);
+    const [step, setStep] = useState(0);
+    const messages = [
+        "Hey",
+        "It's Valentine's Day weekend",
+        "So I got you flowers",
+        "Who knows, maybe you'll get some real ones too",
+        "I mean, we have until the end of the day..."
+    ];
 
     useEffect(() => {
-        const c = setTimeout(() => {
-            setLoaded(true);
-        }, 3000);
+        const loadTimer = setTimeout(() => setLoaded(true), 18000);
 
-        return () => clearTimeout(c);
-    }, []);
+        if (step < messages.length - 1) {
+            const timer = setTimeout(() => {
+                setStep(prev => prev + 1);
+            }, 4000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [step]);
 
     return (
         <>  
-            <div className="fade-up-down delay-4 fixed inset-0 flex items-center justify-center z-50 font-title text-5xl">Got you flowers</div>
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 pointer-events-none px-6 text-center">
+                <div
+                    key={step}
+                    className="fade-up-down font-title text-3xl sm:text-4xl md:text-5xl max-w-2xl break-words">
+                        {messages[step]}
+                </div>
+            </div>
             <div className={`friday-flowers ${loaded ? "" : "not-loaded"}`}>
                 <Link href="/saturday" className="magic-link">
                     <svg

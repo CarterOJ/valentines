@@ -15,7 +15,7 @@ export default function SaturdayWrapper() {
 export function Saturday() {
   const { switchPage, remainingMs } = useSwitchPage();
 
-  return switchPage ? <Hello /> : <Construction remainingMs={remainingMs} message={"Come back on Saturday to get your next hint!"} day={"Saturday"} />;
+  return switchPage ? <Hello /> : <Construction remainingMs={remainingMs} message={"Come back on Saturday to get a hint about the agenda!"} day={"Saturday"} />;
 }
 
 function Hello() {
