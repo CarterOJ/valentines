@@ -51,11 +51,11 @@ function Flowers() {
 
     return (
         <>  
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 pointer-events-none px-6 text-center">
-                <div
-                    key={step}
-                    className="fade-up-down font-title text-3xl sm:text-4xl md:text-5xl max-w-2xl break-words">
-                        {messages[step]}
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 pointer-events-none px-6 text-center fade-up-down">
+                <div key={step} className="fade-wrapper">
+                <div className="slide-up-down font-title text-white text-3xl sm:text-4xl md:text-5xl max-w-2xl break-words">
+                    {messages[step]}
+                </div>
                 </div>
             </div>
             <div className={`friday-flowers ${loaded ? "" : "not-loaded"}`}>

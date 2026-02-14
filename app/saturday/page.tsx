@@ -270,7 +270,7 @@ function Valentine() {
           text-align: left;
           animation: unroll 0.6s ease forwards;
           z-index: 999;
-          width: 600px;
+          width: 85%;
         }
 
         @keyframes unroll {

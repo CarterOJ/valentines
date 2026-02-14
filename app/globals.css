@@ -259,33 +259,33 @@ body {
   }
 }
 
-.fade-up-down {
-  opacity: 0;
+/* Wrapper handles opacity */
+.fade-wrapper {
+  animation: fadeWrapper 3s ease forwards;
+}
+
+/* Inner text handles movement only */
+.slide-up-down {
   transform: translateY(12px);
-  animation: fadeUpDown 3s ease forwards;
+  animation: slideUpDown 3s ease forwards;
 }
 
-@keyframes fadeUpDown {
-  0% {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  20% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  80% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
+/* Opacity animation (on wrapper, not text) */
+@keyframes fadeWrapper {
+  0%   { opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
 }
+
+/* Transform animation (no opacity here) */
+@keyframes slideUpDown {
+  0%   { transform: translateY(12px); }
+  20%  { transform: translateY(0); }
+  80%  { transform: translateY(0); }
+  100% { transform: translateY(-12px); }
+}
+
 
 /* ===== Base shared styles ===== */
 .dog-runner,
