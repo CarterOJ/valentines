@@ -1,8 +1,77 @@
 "use client";
 
-export default function ValentineCinematic() {
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import "@/components/flowers.scss";
+import Construction from "@/components/construction";
+import { SwitchPageProvider, useSwitchPage } from "@/components/switchPageContext";
+
+export default function SaturdayWrapper() {
+  return (
+    <SwitchPageProvider targetDate={new Date("2026-02-14T00:00:00")}>
+      <Saturday />
+    </SwitchPageProvider>
+  );
+}
+
+export function Saturday() {
+  const { switchPage, remainingMs } = useSwitchPage();
+
+  return switchPage ? <Valentine /> : <Construction remainingMs={remainingMs} message={"Come back on Friday to unlock the start of Valentine's Day weekend!"} day={"Friday"} />;
+}
+
+function Valentine() {
+  const [letterOpen, setLetterOpen] = useState(false);
+  const letterRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (letterRef.current && !letterRef.current.contains(e.target as Node)) {
+        setLetterOpen(false);
+      }
+    }
+    if (letterOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [letterOpen]);
+
   return (
     <div className="valentine-page">
+      <Link href="/friday" className="magic-link nav-link nav-left" aria-label="Go to Friday">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="arrow-icon arrow-left">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </Link>
+      <Link href="/sunday" className="magic-link nav-link nav-right" aria-label="Go to Sunday">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="arrow-icon">
+          <line x1="5" y1="12" x2="19" y2="12" />
+          <polyline points="12 5 19 12 12 19" />
+        </svg>
+      </Link>
       {/* Chandelier */}
       <div className="chandelier">
         <div className="chain"></div>
@@ -45,33 +114,29 @@ export default function ValentineCinematic() {
 
       {/* Main Content */}
       <div className="content">
-        <h1>My Love</h1>
-        <h2 className="subtitle">A Night Just for Us</h2>
+        <h1>Happy Valentine's Day</h1>
+        <h2 className="subtitle">I wrote you something...</h2>
 
-        <p>
-          Under the soft glow of candlelight, with petals drifting through the
-          air, tonight belongs only to us.
-        </p>
+        <p><i>Hint: Under the soft glow of candlelight, with petals drifting through the air, tonight belongs only to us.</i></p>
 
-        {/* Scroll Letter */}
-        <details className="letter">
-          <summary className="scroll-closed">Unroll My Letter</summary>
-          <div className="letter-content">
-            <p>
-              From the moment you walked into my life, everything felt softer,
-              warmer, brighter.
-            </p>
-            <p>
-              You are my calm in chaos, my comfort in silence, and my favorite
-              place to rest my heart.
-            </p>
-            <p>
-              Tonight is just a small reflection of how deeply I cherish you —
-              and how endlessly grateful I am for us.
-            </p>
-            <p>Forever yours.</p>
+        {/* Button to open letter */}
+        <button className="scroll-closed" onClick={() => setLetterOpen(true)}>
+          View Letter
+        </button>
+
+        {/* Centered Absolute Letter */}
+        {letterOpen && (
+          <div className="letter-content absolute-center" ref={letterRef}>
+            <p>Dear Chesney,</p>
+            <br></br>
+            <p>Look how fancy this font is! It's so fancy and small, it's almost impossible to read! Anyways, I'll keep this short, but I just wanted to say that I love you. Creating this project with you in mind has been so much fun and so rewarding for me. You mean the world to me and hopefully you can see that based on the amount of hours I put into creating this site for you, haha.</p>
+            <br></br>
+            <p>P.S. I bet you can't guess what we're doing tonight...</p>
+            <br></br>
+            <p>Sincerely,</p>
+            <p>Carter</p>
           </div>
-        </details>
+        )}
       </div>
 
       {/* Bottom Scene */}
@@ -148,7 +213,7 @@ export default function ValentineCinematic() {
           z-index: 2;
           animation: float 6s ease-in-out infinite;
           padding: 2rem;
-          max-width: 600px;
+          max-width: 700px;
         }
 
         h1 {
@@ -176,11 +241,6 @@ export default function ValentineCinematic() {
           100% { transform: translateY(0px); }
         }
 
-        /* LETTER SCROLL CLOSED */
-        .letter {
-          margin-top: 2rem;
-        }
-
         .scroll-closed {
           background: linear-gradient(to bottom, #e8d3b9, #d7b98f);
           padding: 12px 28px;
@@ -190,11 +250,16 @@ export default function ValentineCinematic() {
           color: #4a2c1a;
           cursor: pointer;
           box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+          border: none;
+          font-size: 1rem;
+          margin-top: 2rem;
         }
 
-        /* LETTER OPEN */
-        .letter-content {
-          margin-top: 1.5rem;
+        .letter-content.absolute-center {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) scaleY(0.2);
           padding: 2rem;
           background: linear-gradient(to bottom, #fdf6e3, #f1e4c6);
           border-radius: 8px;
@@ -203,6 +268,20 @@ export default function ValentineCinematic() {
           font-size: 1.3rem;
           color: #4a2c1a;
           text-align: left;
+          animation: unroll 0.6s ease forwards;
+          z-index: 999;
+          width: 600px;
+        }
+
+        @keyframes unroll {
+          from {
+            transform: translate(-50%, -50%) scaleY(0.2);
+            opacity: 0;
+          }
+          to {
+            transform: translate(-50%, -50%) scaleY(1);
+            opacity: 1;
+          }
         }
 
         /* PETALS */
@@ -433,6 +512,32 @@ export default function ValentineCinematic() {
           0% { transform: translateX(-50%) rotate(-2deg); }
           50% { transform: translateX(-50%) rotate(2deg); }
           100% { transform: translateX(-50%) rotate(-2deg); }
+        }
+
+        :global(.magic-link.nav-link) {
+          top: 50%;
+          background: linear-gradient(135deg, #f7e1b5, #d3a15d);
+          box-shadow: 0 0 22px rgba(255, 214, 170, 0.95), 0 0 40px rgba(255, 200, 140, 0.7);
+          filter: drop-shadow(0 0 12px rgba(255, 210, 150, 0.9));
+        }
+
+        :global(.magic-link.nav-left) {
+          left: 20px;
+          right: auto;
+        }
+
+        :global(.magic-link.nav-right) {
+          right: 20px;
+          left: auto;
+        }
+
+        :global(.magic-link.nav-link:hover) {
+          box-shadow: 0 0 32px rgba(255, 214, 170, 1), 0 0 52px rgba(255, 200, 140, 0.9);
+          filter: drop-shadow(0 0 16px rgba(255, 210, 150, 1));
+        }
+
+        .arrow-left {
+          transform: rotate(180deg);
         }
 
 
